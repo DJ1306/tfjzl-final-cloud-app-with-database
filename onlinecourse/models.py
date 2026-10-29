@@ -98,11 +98,11 @@ class Enrollment(models.Model):
 class Question(models.Model):
     """An exam question belonging to one course."""
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    content = models.CharField(max_length=200)
-    grade = models.PositiveIntegerField(default=100)
+    question_text = models.CharField(max_length=200)
+    grade = models.IntegerField(default=1)
 
     def __str__(self):
-        return self.content
+        return self.question_text
 
     def is_get_score(self, selected_ids):
         """Award credit only for the exact set of correct choices."""
@@ -114,14 +114,17 @@ class Question(models.Model):
 class Choice(models.Model):
     """A possible answer to an exam question."""
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    content = models.CharField(max_length=200)
+    choice_text = models.CharField(max_length=200)
     is_correct = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.content
+        return self.choice_text
 
 
 class Submission(models.Model):
     """Selected answers for one course enrollment."""
     enrollment = models.ForeignKey(Enrollment, on_delete=models.CASCADE)
     choices = models.ManyToManyField(Choice, blank=True)
+
+    def __str__(self):
+        return f'{self.enrollment.user.username}: {self.enrollment.course.name} (submission {self.pk})'

@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}Online Course{% endblock %}</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<style>
+body{background:#f3f6fa;color:#243247;font-family:system-ui,sans-serif;margin:0}
+.container{max-width:1040px;margin:auto;padding:28px}.navbar{background:#12395b!important;color:white;padding:18px 28px}
+.navbar a{color:white;margin-right:18px}.card{background:white;border:1px solid #dce3ec;border-radius:8px;margin:18px 0}
+.card-header,.card-body{padding:18px}.card-header{background:#eaf0f7}.alert{padding:22px;border-radius:8px;margin:18px 0}
+.alert-success{background:#d9f2e2;color:#145c32}.alert-danger{background:#f9dfdf;color:#8b2323}
+.btn{display:inline-block;padding:10px 18px;border-radius:5px;text-decoration:none}.btn-primary{background:#165a96;color:white;border:0}
+.text-success{color:#14683a}.text-danger{color:#a52828}label{display:block;margin:10px 0}h1{font-size:30px}h2{font-size:23px}
+</style></head><body>
+<nav class="navbar"><a href="{% url 'onlinecourse:index' %}">Online Course</a>
+{% if user.is_authenticated %}<span>{{ user.username }}</span><a href="{% url 'onlinecourse:logout' %}">Logout</a>
+{% else %}<a href="{% url 'onlinecourse:login' %}">Login</a>{% endif %}</nav>
+<main class="container">{% block content %}{% endblock %}</main></body></html>

@@ -27,8 +27,8 @@ class Command(BaseCommand):
             'title': 'What is Django',
             'content': 'Django is a high-level Python web framework that encourages rapid development and clean, pragmatic design.',
         })
-        question, _ = Question.objects.get_or_create(course=course, content='Is Django a Python framework', defaults={'grade': 100})
-        Choice.objects.get_or_create(question=question, content='Yes', defaults={'is_correct': True})
-        Choice.objects.get_or_create(question=question, content='No', defaults={'is_correct': False})
+        question, _ = Question.objects.get_or_create(course=course, question_text='Is Django a Python framework', defaults={'grade': 100})
+        Choice.objects.get_or_create(question=question, choice_text='Yes', defaults={'is_correct': True})
+        Choice.objects.get_or_create(question=question, choice_text='No', defaults={'is_correct': False})
         Enrollment.objects.get_or_create(user=admin, course=course)
         self.stdout.write(self.style.SUCCESS(f'Learning Django is ready. Course ID: {course.id}'))

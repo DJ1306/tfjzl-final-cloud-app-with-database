@@ -1,0 +1,23 @@
+{% extends 'onlinecourse/assessment_base.html' %}
+{% block title %}{{ course.name }}{% endblock %}
+{% block content %}
+<h1>{{ course.name }}</h1><p>{{ course.description }}</p>
+{% for lesson in course.lesson_set.all %}
+<section class="card"><div class="card-header"><h2>Lesson {{ lesson.order|add:1 }}: {{ lesson.title }}</h2></div>
+<div class="card-body">{{ lesson.content|linebreaks }}</div></section>
+{% empty %}<p>No lessons are available yet.</p>{% endfor %}
+{% if user.is_authenticated %}
+{% if is_enrolled %}
+<details class="card" open><summary class="card-header">Start Exam</summary><div class="card-body">
+<p>Select all correct choices for each question. Passing score: 80%.</p>
+<form action="{% url 'onlinecourse:submit' course.id %}" method="post">{% csrf_token %}
+{% for question in course.question_set.all %}
+<fieldset class="card"><legend class="card-header">{{ question.content }} ({{ question.grade }} points)</legend><div class="card-body">
+{% for choice in question.choice_set.all %}
+<label for="choice_{{ choice.id }}"><input type="checkbox" id="choice_{{ choice.id }}" name="choice_{{ question.id }}" value="{{ choice.id }}"> {{ choice.content }}</label>
+{% endfor %}</div></fieldset>
+{% empty %}<p>No exam questions are available.</p>{% endfor %}
+<button class="btn btn-primary" type="submit">Submit Exam</button></form></div></details>
+{% else %}<a class="btn btn-primary" href="{% url 'onlinecourse:enroll' course.id %}">Enroll to take the exam</a>{% endif %}
+{% else %}<a class="btn btn-primary" href="{% url 'onlinecourse:login' %}">Log in to take the exam</a>{% endif %}
+{% endblock %}

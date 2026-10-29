@@ -21,6 +21,7 @@ class ChoiceInline(admin.TabularInline):
 class CourseAdmin(admin.ModelAdmin):
     inlines = [LessonInline, QuestionInline]
     list_display = ('name', 'pub_date')
+    list_filter = ('pub_date',)
     search_fields = ('name', 'description')
 
 
@@ -30,7 +31,7 @@ class LessonAdmin(admin.ModelAdmin):
 
 class QuestionAdmin(admin.ModelAdmin):
     inlines = [ChoiceInline]
-    list_display = ('content', 'course', 'grade')
+    list_display = ('question_text', 'course', 'grade')
     list_filter = ('course',)
 
 

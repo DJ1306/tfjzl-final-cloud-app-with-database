@@ -12,9 +12,9 @@
 <p>Select all correct choices for each question. Passing score: 80%.</p>
 <form action="{% url 'onlinecourse:submit' course.id %}" method="post">{% csrf_token %}
 {% for question in course.question_set.all %}
-<fieldset class="card"><legend class="card-header">{{ question.content }} ({{ question.grade }} points)</legend><div class="card-body">
+<fieldset class="card"><legend class="card-header">{{ question.question_text }} ({{ question.grade }} points)</legend><div class="card-body">
 {% for choice in question.choice_set.all %}
-<label for="choice_{{ choice.id }}"><input type="checkbox" id="choice_{{ choice.id }}" name="choice_{{ question.id }}" value="{{ choice.id }}"> {{ choice.content }}</label>
+<label for="choice_{{ choice.id }}"><input type="checkbox" id="choice_{{ choice.id }}" name="choice_{{ question.id }}" value="{{ choice.id }}"> {{ choice.choice_text }}</label>
 {% endfor %}</div></fieldset>
 {% empty %}<p>No exam questions are available.</p>{% endfor %}
 <button class="btn btn-primary" type="submit">Submit Exam</button></form></div></details>

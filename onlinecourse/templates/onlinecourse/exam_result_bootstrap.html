@@ -8,10 +8,10 @@
 <p>Points earned: {{ earned_score }} / {{ total_score }}. Passing score: 80%.</p></section>
 <h2>Detailed exam results</h2>
 {% for result in question_results %}
-<article class="card"><div class="card-header"><strong>Question {{ forloop.counter }}: {{ result.question.content }}</strong></div><div class="card-body">
+<article class="card"><div class="card-header"><strong>Question {{ forloop.counter }}: {{ result.question.question_text }}</strong></div><div class="card-body">
 {% if result.correct %}<p class="text-success">Correct — {{ result.question.grade }} points earned</p>{% else %}<p class="text-danger">Incorrect — 0 points earned</p>{% endif %}
 {% for item in result.choices %}<p class="{% if item.choice.is_correct %}text-success{% elif item.selected %}text-danger{% endif %}">
-{% if item.selected %}Selected:{% else %}Not selected:{% endif %} {{ item.choice.content }} — {% if item.choice.is_correct %}Correct answer{% else %}Incorrect answer{% endif %}</p>{% endfor %}
+{% if item.selected %}Selected:{% else %}Not selected:{% endif %} {{ item.choice.choice_text }} — {% if item.choice.is_correct %}Correct answer{% else %}Incorrect answer{% endif %}</p>{% endfor %}
 </div></article>{% empty %}<p>This course has no graded questions.</p>{% endfor %}
 <a class="btn btn-primary" href="{% url 'onlinecourse:course_details' course.id %}">Retake Exam</a>
 {% endblock %}
